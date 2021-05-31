@@ -1,0 +1,14 @@
+h1 {
+  text-align: center;
+  font-size: 65px;
+}
+
+.expenseForm {
+  font-size: 20px;
+  border-style: double;
+  text-align: center;
+}
+
+.expenseTable {
+  border-style: solid;
+}
