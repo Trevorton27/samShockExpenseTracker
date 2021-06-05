@@ -1,1 +1,1 @@
-# Expense-Tracker
+A simple expense tracker built with HTML, CSS, and JS. I'm having issues with CSS and alignment, but enjoy seeing how much money you're spending https://sam-shock924.github.io/Expense-Tracker/! <img width="1179" alt="Screen Shot 2021-06-05 at 17 47 43 PM png  1  copy" src="https://user-images.githubusercontent.com/83183939/120906387-0384ef80-c627-11eb-82b8-47d5a453998a.png">
