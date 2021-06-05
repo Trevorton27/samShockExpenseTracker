@@ -1,11 +1,10 @@
-const dateInput = document.querySelector("date");
-const paymentMethod = document.querySelector("paymentMethod");
-const itemInput = document.querySelector("item");
-const locationInput = document.querySelector("locaiton");
-const costInput = document.querySelector("amount");
+const dateInput = document.getElementById("date");
+const paymentMethod = document.getElementById("paymentMethod");
+const itemInput = document.getElementById("item");
+const locationInput = document.getElementById("location");
+const costInput = document.getElementById("amount");
 const expenseInput = document.getElementById("expenseTable");
 const submitButton = document.getElementById("submit");
-
 
 
 function getDate() {
@@ -13,9 +12,9 @@ function getDate() {
     return date;
 }
 
- function getPayment() {
-   const payment = paymentMethod.value;
-   return payment;
+function getPayment() {
+    const payment = paymentMethod.value;
+    return payment;
 }
 
 function getItem() {
@@ -33,8 +32,8 @@ function getCost() {
     return cost;
 }
 
-submitButton.addEventListener('click', function newExpense() {
-    
+submitButton.addEventListener('click', function newExpense(event) {
+    event.preventDefault();
     const row = expenseInput.insertRow(1);
     const cell1 = row.insertCell(0);
     const cell2 = row.insertCell(1);
@@ -42,9 +41,10 @@ submitButton.addEventListener('click', function newExpense() {
     const cell4 = row.insertCell(3);
     const cell5 = row.insertCell(4);
 
-    cell1.textContent = date;
-    cell2.textContent = payment;
-    cell3.textContent = item;
-    cell4.textContent = location;
-    cell5.textContent = "$" + cost;
+    cell1.textContent = getDate();
+    cell2.textContent = getPayment();
+    cell3.textContent = getItem();
+    cell4.textContent = getLocation();
+    cell5.textContent = "$" + getCost();
+
 })
