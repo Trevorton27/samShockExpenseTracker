@@ -40,11 +40,18 @@ submitButton.addEventListener('click', function newExpense(event) {
     const cell3 = row.insertCell(2);
     const cell4 = row.insertCell(3);
     const cell5 = row.insertCell(4);
+    const cell6 = row.insertCell(5);
 
     cell1.textContent = getDate();
     cell2.textContent = getPayment();
     cell3.textContent = getItem();
     cell4.textContent = getLocation();
     cell5.textContent = "$" + getCost();
+    cell6.textContent = "Delete";
 
+    cell6.addEventListener('click', (event) => {
+        event.preventDefault();
+        cell6.parentElement.remove();
+
+    })
 })
