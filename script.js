@@ -48,6 +48,13 @@ submitButton.addEventListener('click', function newExpense(event) {
     cell4.textContent = getLocation();
     cell5.textContent = "$" + getCost();
     cell6.textContent = "Delete";
+ 
+    //cell styles to act like button//
+    cell6.style.fontSize = '15px';
+    cell6.style.color = 'white';
+    cell6.style.backgroundColor = 'darkRed';
+    cell6.style.borderRadius = '5px';
+    cell6.style.cursor = 'pointer';
 
     cell6.addEventListener('click', (event) => {
         event.preventDefault();
