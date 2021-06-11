@@ -9,23 +9,11 @@ h1 {
   font-size: 65px;
 }
 
-#submit {
+.submit {
   margin-left: auto;
   margin-right: auto;
-  margin-top: 1em;
-  background-color: #000;
-  color: #fff;
-  padding: 6px;
-  border-radius: 6px;
 }
 
-.deleteButton {
-  background-color: #bc0707;
-  color: #fff;
-  padding: 6px;
-  border-radius: 6px;
-  border: none;
-}
 .expenseInput {
   display: inline-block;
   font-size: 25px;

@@ -1,64 +1,105 @@
-const dateInput = document.getElementById("date");
-const paymentMethod = document.getElementById("paymentMethod");
-const itemInput = document.getElementById("item");
-const locationInput = document.getElementById("location");
-const costInput = document.getElementById("amount");
-const expenseInput = document.getElementById("expenseTable");
-const submitButton = document.getElementById("submit");
+let expenseArray = JSON.parse(localStorage.getItem('expenseArray')) || [];
+const dateInput = document.getElementById('date');
+const paymentMethod = document.getElementById('paymentMethod');
+const itemInput = document.getElementById('item');
+const locationInput = document.getElementById('location');
+const costInput = document.getElementById('amount');
+const expenseTable = document.getElementById('expenseTable');
+const submitButton = document.getElementById('submit');
 
+submitButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  if (
+    !dateInput.value ||
+    !paymentMethod.value ||
+    !itemInput.value ||
+    !locationInput.value ||
+    !costInput.value
+  ) {
+    alert('Please fill out all fields before submitting. ');
+    return;
+  }
 
-function getDate() {
-    const date = dateInput.value;
-    return date;
+  const newExpense = {
+    id: Date.now(),
+    date: dateInput.value,
+    description: itemInput.value,
+    paymentMethod: paymentMethod.value,
+    amount: `$${costInput.value}`,
+    vendor: locationInput.value
+  };
+
+  addExpense(newExpense);
+
+  document.getElementById('expenseInput').reset();
+});
+
+const addExpense = (expense) => {
+  renderExpenseRow(expense);
+  expenseArray.push(expense);
+  pushToLocalStorage(expenseArray);
+};
+
+function pushToLocalStorage(array) {
+  localStorage.setItem('expenseArray', JSON.stringify(array));
 }
 
-function getPayment() {
-    const payment = paymentMethod.value;
-    return payment;
+function renderExpenseRow(expense) {
+  const createTableRowExpense = document.createElement('tr');
+  expenseTable.appendChild(createTableRowExpense);
+  createTableRowExpense.classList.add('tableRowExpense');
+
+  const dateCell = createCell(expense.date);
+  createTableRowExpense.appendChild(dateCell);
+
+  const paymentMethodCell = createCell(expense.paymentMethod);
+  createTableRowExpense.appendChild(paymentMethodCell);
+
+  const costCell = createCell(expense.amount);
+  costCell.classList.add('expenseAmount');
+  createTableRowExpense.appendChild(costCell);
+
+  const descriptionCell = createCell(expense.description);
+  createTableRowExpense.appendChild(descriptionCell);
+
+  const locationCell = createCell(expense.vendor);
+  createTableRowExpense.appendChild(locationCell);
+
+  const deleteCell = document.createElement('td');
+  const deleteButton = createDeleteButton(expense);
+  createTableRowExpense.appendChild(deleteCell);
+  deleteCell.appendChild(deleteButton);
 }
 
-function getItem() {
-    const item = itemInput.value;
-    return item;
+const createCell = (expense) => {
+  const dataCell = document.createElement('td');
+  dataCell.textContent = expense;
+  return dataCell;
+};
+
+const createDeleteButton = (expense) => {
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Delete';
+  deleteButton.setAttribute('class', 'deleteButton');
+
+  deleteButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    deleteExpense(deleteButton, expense.id);
+  });
+  return deleteButton;
+};
+
+function deleteExpense(deleteButton, id) {
+  deleteButton.parentElement.parentElement.remove();
+  expenseArray = expenseArray.filter((expense) => {
+    return expense.id !== id;
+  });
+  pushToLocalStorage(expenseArray);
 }
 
-function getLocation() {
-    const location = locationInput.value;
-    return location;
-}
-
-function getCost() {
-    const cost = costInput.value;
-    return cost;
-}
-
-submitButton.addEventListener('click', function newExpense(event) {
-    event.preventDefault();
-    const row = expenseInput.insertRow(1);
-    const cell1 = row.insertCell(0);
-    const cell2 = row.insertCell(1);
-    const cell3 = row.insertCell(2);
-    const cell4 = row.insertCell(3);
-    const cell5 = row.insertCell(4);
-    const cell6 = row.insertCell(5);
-
-    cell1.textContent = getDate();
-    cell2.textContent = getPayment();
-    cell3.textContent = getItem();
-    cell4.textContent = getLocation();
-    cell5.textContent = "$" + getCost();
-    cell6.textContent = "Delete";
- 
-    //cell styles to act like button//
-    cell6.style.fontSize = '15px';
-    cell6.style.color = 'white';
-    cell6.style.backgroundColor = 'darkRed';
-    cell6.style.borderRadius = '5px';
-    cell6.style.cursor = 'pointer';
-
-    cell6.addEventListener('click', (event) => {
-        event.preventDefault();
-        cell6.parentElement.remove();
-
-    })
-})
+window.addEventListener('load', (e) => {
+  e.preventDefault();
+  expenseArray.forEach((expense) => {
+    renderExpenseRow(expense);
+  });
+});
